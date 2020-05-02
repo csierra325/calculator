@@ -14,9 +14,77 @@ class Calculator extends Component{
         };
     }
 
-    addToInput = (val) => {
+    addToInput = val => {
         this.setState({input: this.state.input + val});
     }
+
+    addZeroToInput = val => {
+        if (this.state.input !== ''){
+            this.setState({ input: this.state.input + val })
+        }
+    }
+
+    addDecimal = val => {
+        if (this.state.input.indexOf(".") === -1){
+            this.setState({ input: this.state.input + val})
+        }
+    }
+
+   clearInput = () => {
+       this.setState({ input: '' })
+   }
+
+   add = () => {
+       this.state.previousNumber = this.state.input
+       this.setState({ input: "" })
+       this.state.operator = "plus"
+   }
+
+   subtract = () => {
+       this.state.previousNumber = this.state.input
+       this.setState({ input: "" })
+       this.state.operator = "subtract"
+   }
+
+   multiply = () => {
+    this.state.previousNumber = this.state.input
+    this.setState({ input: "" })
+    this.state.operator = "multipy"
+   }
+
+   divide = () => {
+       this.state.previousNumber = this.state.input
+       this.setState({ input: "" })
+       this.state.operator = "divide"
+    
+   }
+
+   evaluate = () => {
+        this.state.currentNumber = this.state.input;
+        if (this.state.operator == "plus"){
+            this.setState({
+                input: parseInt(this.state.previousNumber) +
+                parseInt(this.state.currentNumber)
+            })
+        } else if (this.state.operator == "subtract"){
+            this.setState({
+                input: parseInt(this.state.previousNumber) -
+                parseInt(this.state.currentNumber)
+            })
+        }
+        else if (this.state.operator == "multipy"){
+            this.setState({
+                input: parseInt(this.state.previousNumber) *
+                parseInt(this.state.currentNumber)
+            })
+        }
+        else if (this.state.operator == "divide"){
+            this.setState({
+                input: parseInt(this.state.previousNumber)/
+                parseInt(this.state.currentNumber)
+            })
+        }
+   }
 
 
     render(){
@@ -29,30 +97,30 @@ class Calculator extends Component{
                     </div>
                     <div className="row">
                     <Button handleClick={this.addToInput}>7</Button>
-                    <Button>8</Button>
-                    <Button>9</Button>
-                    <Button>/</Button>
+                    <Button handleClick={this.addToInput}>8</Button>
+                    <Button handleClick={this.addToInput}>9</Button>
+                    <Button handleClick={this.divide}>/</Button>
                     </div>
                     <div className="row">
-                    <Button>4</Button>
-                    <Button>5</Button>
-                    <Button>6</Button>
-                    <Button>*</Button>
+                    <Button handleClick={this.addToInput}>4</Button>
+                    <Button handleClick={this.addToInput}>5</Button>
+                    <Button handleClick={this.addToInput}>6</Button>
+                    <Button handleClick={this.multiply}>*</Button>
                     </div>
                     <div className="row">
-                    <Button>1</Button>
-                    <Button>2</Button>
-                    <Button>3</Button>
-                    <Button>+</Button>
+                    <Button handleClick={this.addToInput}>1</Button>
+                    <Button handleClick={this.addToInput}>2</Button>
+                    <Button handleClick={this.addToInput}>3</Button>
+                    <Button handleClick={this.add}>+</Button>
                     </div>
                     <div className="row">
-                    <Button>.</Button>
-                    <Button>0</Button>
-                    <Button>=</Button>
-                    <Button>-</Button>
+                    <Button handleClick={this.addDecimal}>.</Button>
+                    <Button handleClick={this.addZeroToInput}>0</Button>
+                    <Button handleClick={this.evaluate}>=</Button>
+                    <Button handleClick={this.subtract}>-</Button>
                     </div>
                     <div className="row">
-                        <ClearButton>Clear</ClearButton>
+                        <ClearButton handleClear={this.clearInput}>Clear</ClearButton>
                     </div>
                 </div>
             </div>
